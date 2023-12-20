@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Submit Request</title>
+  </head>
+  <body>
+    <h1>Submit Request</h1>
+
+    <form>
+      <label for="requestType">Request Type:</label>
+      <input type="text" id="requestType" name="requestType">
+
+      <label for="requestBy">Request By:</label>
+      <input type="text" id="requestBy" name="requestBy">
+
+      <label for="requestMsg">Request Message:</label>
+      <textarea id="requestMsg" name="requestMsg"></textarea>
+
+      <label for="requestStatus">Request Status:</label>
+      <input type="text" id="requestStatus" name="requestStatus">
+
+      <button type="button" onclick="submitRequest()">Submit Request</button>
+    </form>
+
+    <script>
+      async function submitRequest() {
+        const requestType = document.getElementById("requestType").value;
+        const requestBy = document.getElementById("requestBy").value;
+        const requestMsg = document.getElementById("requestMsg").value;
+        const requestStatus = document.getElementById("requestStatus").value;
+
+        const response = await fetch('http://localhost:3000/request_t', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            request_type: requestType,
+            request_by: requestBy,
+            request_msg: requestMsg,
+            request_status: requestStatus,
+            request_time: new Date()
+          })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+      }
+    </script>
+  </body>
+</html>
